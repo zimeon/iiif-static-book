@@ -1,0 +1,4 @@
+*.pyc
+# Data to ignore
+tmp
+euclid
