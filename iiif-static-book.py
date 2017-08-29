@@ -140,9 +140,10 @@ def main():
     base_prezi_uri = args.base_prezi_uri if args.base_prezi_uri else args.base_uri
 
     for src in args.src:
-        book_id = os.path.split(args.src[0])[1]
+        src = src.rstrip('/')  # remove any trailing slash
+        book_id = os.path.split(src)[1]
         print()
-        print("Processing %s directory, will use book_id %s" % (src, book_id))
+        print("Processing %s directory, will use book_id '%s'" % (src, book_id))
         # Set up base output dirs
         os.makedirs(args.dst, exist_ok=True)
         image_dir = os.path.join(args.dst, args.base_image_dir, book_id)
