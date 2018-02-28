@@ -18,7 +18,7 @@ class Book1TestCase(unittest.TestCase):
         self.assertEqual(manifest['label'], "Book book1")
         self.assertEqual(manifest['@id'], "http://localhost:9876/book1/manifest.json")
         self.assertEqual(manifest['@type'], "sc:Manifest")
-                         
+
     def test02_peges(self):
         for n in range(1, 11):
             page_dir = "tmp/book1/%08d" % n

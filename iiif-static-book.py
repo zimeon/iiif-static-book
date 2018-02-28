@@ -40,7 +40,7 @@ class Page(object):
 
 def uri_join(*args):
     """Join URI path components."""
-    return('/'.join([*args]))
+    return('/'.join(args))
 
 
 def make_book(src, book_id,

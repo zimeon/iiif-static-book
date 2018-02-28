@@ -7,8 +7,8 @@ python:
 install:
   - sudo apt-get update
   - sudo apt-get install libmagic-dev libwebp-dev
-  - pip install iiif coveralls pep8 pep257
+  - pip install iiif coveralls pycodestyle pep257
 script:
-  - pep8 --ignore=E501 *.py
+  - pycodestyle --ignore=E501 *.py
   - pep257 *.py
   - test_book1.py
