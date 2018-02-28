@@ -11,4 +11,4 @@ install:
 script:
   - pycodestyle --ignore=E501 *.py
   - pep257 *.py
-  - test_book1.py
+  - python test_book1.py
