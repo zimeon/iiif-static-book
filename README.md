@@ -1,5 +1,7 @@
 # iiif-static-book
 
+NB: Python 3 only
+
 **WORK IN PROGRESS**
 
 Aim is to create a simple program that will generate a set of static tiles and a manifest for a set of images of a book. Based on:
