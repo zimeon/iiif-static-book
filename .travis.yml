@@ -1,0 +1,14 @@
+language: python
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+install:
+  - sudo apt-get update
+  - sudo apt-get install libmagic-dev libwebp-dev
+  - pip install iiif coveralls pep8 pep257
+script:
+  - pep8 --ignore=E501 *.py
+  - pep257 *.py
+  - test_book1.py
