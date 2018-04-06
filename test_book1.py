@@ -11,7 +11,7 @@ class Book1TestCase(unittest.TestCase):
     def setUpClass(cls):
         subprocess.call(["python", "iiif-static-book.py", "testdata/book1"])
 
-    def test01_manifes(self):
+    def test01_manifest(self):
         manifest_file = "tmp/book1/manifest.json"
         self.assertTrue(os.path.isfile(manifest_file))
         manifest = json.load(open(manifest_file, 'r'))
@@ -19,7 +19,7 @@ class Book1TestCase(unittest.TestCase):
         self.assertEqual(manifest['@id'], "http://localhost:9876/book1/manifest.json")
         self.assertEqual(manifest['@type'], "sc:Manifest")
 
-    def test02_peges(self):
+    def test02_pages(self):
         for n in range(1, 11):
             page_dir = "tmp/book1/%08d" % n
             self.assertTrue(os.path.isdir(page_dir))

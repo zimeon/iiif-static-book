@@ -1,4 +1,8 @@
 *.pyc
+.cache
 # Data to ignore
 tmp
 euclid
+# LaTeX junk
+*.log
+*.aux
