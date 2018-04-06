@@ -39,7 +39,7 @@ class Page(object):
         if (label is None):
             label = self.identifier.replace("_", " ")
             if (re.match(r'''^[0-9]+$''', label)):
-                label = 'p%d' % int(t)
+                label = 'p%d' % int(label)
         return label
 
 
