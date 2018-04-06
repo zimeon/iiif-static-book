@@ -1,12 +1,12 @@
 {
     "label": "My Book 2",
+    "metadata": [
+        {"label": "Author", "value": "Anne Author"},
+        {"label": "Published", "value": "Indigo Books"}
+    ],
     "images": {
-	    "page1": {
-	        "label": "First Page",
-            "metadata": [
-                {"label": "Author", "value": "Anne Author"},
-                {"label": "Published", "value": "Indigo Books"}
-            ]
+        "page1": {
+            "label": "First Page"
         }
     }
 }

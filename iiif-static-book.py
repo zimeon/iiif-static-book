@@ -95,10 +95,13 @@ def make_book(src, book_id,
                     prefix=image_uri,
                     osd_version='2.0.0',
                     extras=['/full/90,/0/default.jpg',
+                            '/full/47,/0/default.jpg', '/full/48,/0/default.jpg', '/full/49,/0/default.jpg',
+                            '/full/50,/0/default.jpg', '/full/51,/0/default.jpg', '/full/52,/0/default.jpg', 
+                            '/full/130,/0/default.jpg', '/full/131,/0/default.jpg',
                             '/full/200,/0/default.jpg'])  # thumbnail for UV
     for image_file in sorted(glob.glob(os.path.join(src, args.pattern))):
         identifier = os.path.split(os.path.splitext(image_file)[0])[1]
-        logging.info("Page %s..." % (image_file))
+        logging.info("Page %s from %s..." % (identifier, image_file))
         if (not args.skip_tiles):
             sg.generate(image_file)
         pages.append(Page(image_file=image_file,
@@ -117,12 +120,16 @@ def make_book(src, book_id,
     fac.set_base_prezi_dir(prezi_dir)
     mflbl = md.get('label', default="Book " + os.path.split(image_dir)[1].replace("_", " "))
     mfst = fac.manifest(label=mflbl)
+    for md_dict in md.get('metadata', default=[]):
+        mfst.metadata = md_dict
+    for key in ('license', 'logo', 'related', 'seeAlso', 'structures'):
+        value = md.get(key)
+        if (value is not None):
+            mfst.__setattr__(key, value)
     seq = mfst.sequence()
     for page in pages:
         logging.debug("Adding %s as %s" % (page.identifier, page.label))
         canvas = seq.canvas(ident=page.identifier, label=page.label)
-        for md_dict in page.md_get('metadata', default=[]):
-            canvas.metadata = md_dict
         # Make image annotation manually so we use disk info.json but real URI for @id
         anno = canvas.annotation()
         image = anno.image(ident=page.identifier, iiif=True)
@@ -150,6 +157,8 @@ def main():
                    help='Glob pattern to look for page images in src')
     p.add_argument('--dst', default='tmp',
                    help='Destination directory')
+    p.add_argument('--book-id', default=None,
+                   help='Book id')
     p.add_argument('--base-uri', default='http://localhost:9876',
                    help='Base URI for images and/or presentation API manifest. Override either '
                         'with --base-image-uri or --base-prezi-uri')
@@ -184,22 +193,21 @@ def main():
     base_image_uri = args.base_image_uri if args.base_image_uri else args.base_uri
     base_prezi_uri = args.base_prezi_uri if args.base_prezi_uri else args.base_uri
 
-    for src in args.src:
-        src = src.rstrip('/')  # remove any trailing slash
-        book_id = os.path.split(src)[1]
-        print()
-        print("Processing %s directory, will use book_id '%s'" % (src, book_id))
-        # Set up base output dirs
-        os.makedirs(args.dst, exist_ok=True)
-        image_dir = os.path.join(args.dst, args.base_image_dir, book_id)
-        os.makedirs(image_dir, exist_ok=True)
-        prezi_dir = os.path.join(args.dst, args.base_prezi_dir, book_id)
-        os.makedirs(prezi_dir, exist_ok=True)
-        # Do it...
-        make_book(src, book_id,
-                  image_dir=image_dir, image_uri=uri_join(base_image_uri, book_id),
-                  prezi_dir=prezi_dir, prezi_uri=uri_join(base_prezi_uri, book_id),
-                  args=args)
+    src = args.src[0].rstrip('/')  # remove any trailing slash
+    book_id = os.path.split(src)[1] if args.book_id is None else args.book_id
+    print()
+    print("Processing %s directory, will use book_id '%s'" % (src, book_id))
+    # Set up base output dirs
+    os.makedirs(args.dst, exist_ok=True)
+    image_dir = os.path.join(args.dst, args.base_image_dir, book_id)
+    os.makedirs(image_dir, exist_ok=True)
+    prezi_dir = os.path.join(args.dst, args.base_prezi_dir, book_id)
+    os.makedirs(prezi_dir, exist_ok=True)
+    # Do it...
+    make_book(src, book_id,
+              image_dir=image_dir, image_uri=uri_join(base_image_uri, book_id),
+              prezi_dir=prezi_dir, prezi_uri=uri_join(base_prezi_uri, book_id),
+              args=args)
 
 
 if __name__ == '__main__':

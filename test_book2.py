@@ -18,11 +18,11 @@ class Book2TestCase(unittest.TestCase):
         self.assertEqual(manifest['label'], "My Book 2")
         self.assertEqual(manifest['@id'], "http://localhost:9876/book2/manifest.json")
         self.assertEqual(manifest['@type'], "sc:Manifest")
+        self.assertEqual(manifest['metadata'][0]['label'], "Author")
+        self.assertEqual(manifest['metadata'][0]['value'], "Anne Author")
         # Info from metadata for page1
         canvas0 = manifest['sequences'][0]['canvases'][0]
         self.assertEqual(canvas0['label'], "First Page")
-        self.assertEqual(canvas0['metadata'][0]['label'], "Author")
-        self.assertEqual(canvas0['metadata'][0]['value'], "Anne Author")
         # Info defaults for page2
         self.assertEqual(manifest['sequences'][0]['canvases'][1]['label'], "page2")
 
