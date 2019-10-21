@@ -96,7 +96,7 @@ def make_book(src, book_id,
                     osd_version='2.0.0',
                     extras=['/full/90,/0/default.jpg',
                             '/full/47,/0/default.jpg', '/full/48,/0/default.jpg', '/full/49,/0/default.jpg',
-                            '/full/50,/0/default.jpg', '/full/51,/0/default.jpg', '/full/52,/0/default.jpg', 
+                            '/full/50,/0/default.jpg', '/full/51,/0/default.jpg', '/full/52,/0/default.jpg',
                             '/full/130,/0/default.jpg', '/full/131,/0/default.jpg',
                             '/full/200,/0/default.jpg'])  # thumbnail for UV
     for image_file in sorted(glob.glob(os.path.join(src, args.pattern))):
